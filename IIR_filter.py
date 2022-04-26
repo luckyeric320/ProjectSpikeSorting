@@ -36,7 +36,7 @@ class Raw:
         
     def change_unit(self,ori_unit,new_unit):
         unitlist = ['uV','mV','V']
-        gain = 1000*(unitlist.index(new_unit)-unitlist.index(ori_unit))
+        gain = pow(1000,(unitlist.index(new_unit)-unitlist.index(ori_unit)))
         self = self.scale(gain,0)
         self.unit = new_unit
     
