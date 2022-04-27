@@ -1,2 +1,2 @@
-# ProjectSpikeSoring
+# ProjectSpikeSorting
 An online spike sorting system
