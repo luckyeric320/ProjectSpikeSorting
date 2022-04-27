@@ -2,6 +2,7 @@ from scipy import signal
 import numpy as np
 
 class Raw:
+#本类存储原始波形数据，格式为np.array(dtype='float32')，shape=[n_samples,n_channels]
     
     def __init__(self,time_series,Fs):
         self.data = time_series
