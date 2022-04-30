@@ -14,3 +14,5 @@ An online spike sorting system
 ### 2022/4/29
 在sorter文件夹内增加了PCA降维部分的方法<br>
 添加了使用PCA降维的ipynb示例
+### 2022/4/30
+更新了根据阈值手动分类、绘制平均波形的方法及示例
