@@ -19,7 +19,7 @@ class Detect:
         self.time_points = time_points
         self.Fs = Fs
         self.n_channels = len(waveforms)
-        self.n_spikes = np.zeros([self.n_channels])
+        self.n_spikes = np.zeros([self.n_channels]).astype(int)
         for ch in range(self.n_channels):
             self.n_spikes[ch] = np.shape(waveforms[ch])[0]
         
