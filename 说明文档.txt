@@ -1,0 +1,101 @@
+调用：
+from ddlraw import Raw
+from ddldetect import Detect
+from ddlsorted import Sorted
+
+class Raw:
+存储原始波形数据
+
+主要参数：
+data
+numpy.array，原始波形数据，采样点数*通道数
+
+n_channels
+int，通道数量
+
+Fs
+float或int，采样率（Hz）
+
+unit
+str，幅度单位，“uV”或“mV”或“V”
+
+time_length
+float，记录的时长（单位：s）
+
+channels_names
+list of str，每个通道的名称，默认值为'序号'
+
+channels_locs
+list of numpy.array，每个通道的位置，以（x,y,z）坐标表示，默认值为（0,0,0）
+
+主要方法：
+select_channels_by_index(channel_list=list of int)
+根据序号选取部分通道
+返回一个新的Raw实例
+
+select_channels_by_name(channel_list=list of str)
+根据通道名称选取部分通道
+返回一个新的Raw实例
+
+set_unit(unit)
+设置幅度的单位
+
+scale(gain,drift)
+将数据先缩放到原来的gain倍，再向上移动drift
+
+get_LFP()
+对数据进行1Hz~300Hz滤波
+返回一个新的Raw实例
+
+get_spikes()
+对数据进行300Hz~6000Hz滤波
+返回一个新的Raw实例
+
+extract_by_median(k)
+使用绝对值中位数的k倍为阈值，提取锋电位数据（以峰值为中心，总长度2ms）
+返回Detect实例
+
+class Detect:
+存储检测到的峰值数据
+
+主要参数：
+waveforms
+list of numpy.array，每个通道提取到的所有锋电位波形，通道数*（锋电位数*采样点数）
+
+tiem_points
+list of numpy.array，每个通道提取到的所有锋电位的时刻（单位：s），通道数*（锋电位数）
+
+n_spikes
+list，每个通道提取到的锋电位数量
+
+Fs,unit,time_length,channels_names,channels_locs同Raw
+
+主要方法：
+mannual_select_by_peaks(ch,lowest,highest)
+ch为list of int，为需要改变的通道的序号，lowest和highest为与ch相同长度的list of int或float，表示每个电极上想要保留的峰值范围
+返回一个新的Detect实例，未包含在ch里的通道上的数据不变
+
+sort_by_natural_break()
+使用jenks自然断点法依据峰值大小进行锋电位分类，返回Sorted实例
+
+class Sorted
+存储锋电位分类后的数据
+
+主要参数：
+result
+list of list of numpy.array，每个通道、每个推定神经元的每个锋电位波形，通道数*（神经元数*（锋电位数*采样点数））
+
+time_points
+list of list of numpy.array，每个通道、每个推定神经元发放的时间点，通道数*（神经元数*（锋电位数））
+
+n_neurons
+list of int，每个通道上的推定神经元数量
+
+firing_rate
+list of list of float，每个通道上、每个神经元的发放率（单位：Hz），通道数*（神经元数）
+
+Fs,unit,time_length,channels_names,channels_locs同Raw
+
+主要方法：
+plot_neuron(ch)
+ch为list of int，绘制序号为ch[i]的通道上每个神经元的每次及平均锋电位波形
