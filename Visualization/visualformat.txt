@@ -1,0 +1,78 @@
+Contents
+
+1	AVS UCD Reader
+2	BYU Reader
+3	CML Molecule Reader
+4	CSV Reader
+5	DEM Reader
+6	DICOM Reader (Single File)
+7	DICOM Reader (directory)
+8	ENZO AMR Particles Reader
+9	EnSight Master Server Reader
+10	EnSight Reader
+11	Enzo Reader
+12	ExodusIIReader
+13	FLASH AMR Particles Reader
+14	FacetReader
+15	Flash Reader
+16	Fluent Case Reader
+17	Gaussian Cube Reader
+18	Image Reader
+19	JPEG Series Reader
+20	LSDynaReader
+21	Legacy VTK Reader
+22	MFIXReader
+23	MRC Series Reader
+24	Meta File Series Reader
+25	NetCDF CAM reader
+26	NetCDF MPAS reader
+27	NetCDF POP reader
+28	NetCDF Reader
+29	Nrrd Reader
+30	OpenFOAMReader
+31	PDB Reader
+32	PLOT3D Meta-File Reader
+33	PLOT3D Reader
+34	PLY Reader
+35	PNG Series Reader
+36	PTS Reader
+37	PVD Reader
+38	Parallel NetCDF POP reader
+39	Particles Reader
+40	Partitioned Legacy VTK Reader
+41	Phasta Reader
+42	RTXMLPolyDataReader
+43	Restarted Sim Exodus Reader
+44	Restarted Sim Spy Plot Reader
+45	SLAC Data Reader
+46	SLAC Particle Data Reader
+47	STL Reader
+48	Spy Plot Reader
+49	TIFF Reader
+50	TIFF Series Reader
+51	Tecplot Reader
+52	Unstructured NetCDF POP reader
+53	VPIC Reader
+54	VRML Reader
+55	Wavefront OBJ Reader
+56	WindBlade reader
+57	XDMF Reader
+58	XML Hierarchical Box Data reader
+59	XML Image Data Reader
+60	XML MultiBlock Data Reader
+61	XML Partitioned Image Data Reader
+62	XML Partitioned Polydata Reader
+63	XML Partitioned Rectilinear Grid Reader
+64	XML Partitioned Structured Grid Reader
+65	XML Partitioned Unstructured Grid Reader
+66	XML PolyData Reader
+67	XML Rectilinear Grid Reader
+68	XML Structured Grid Reader
+69	XML UniformGrid AMR Reader
+70	XML Unstructured Grid Reader
+71	XYZ Reader
+72	proSTAR (STARCD) Reader
+73	spcth history reader
+
+paraview官方文档：
+https://www.paraview.org/Wiki/ParaView/Users_Guide/List_of_readers

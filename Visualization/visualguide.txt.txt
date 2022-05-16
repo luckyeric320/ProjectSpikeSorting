@@ -1,0 +1,31 @@
+可视化部分使用说明
+更新时间：2022/05/16
+
+——————使用说明——————————————————————————
+使用前准备：
+linux系统（测试系统为ubuntu18.04）
+
+  在linux系统安装：
+miniconda3（安装方法请csdn搜索ubuntu/debain安装miniconda3）
+mne环境（安装方法见：https://mne.tools/stable/install/installers.html）
+paraview（安装方法见：https://www.paraview.org/download/）
+
+在miniconda的mne环境下pip安装django,up,dl,pysurfer,admin依赖包
+
+
+1、将webvisual解压在linux环境
+2、打开终端1：conda激活mne环境，在webvisual文件夹下：python manage.py runserver 0.0.0.0:8080
+3、打开终端2：（paravaview path/bin）/pvpython -m paraview.apps.visualizer --data /(path of your data) --host 0.0.0.0 --port 9090
+之后便可分别在localhost:8080和localhost:9090访问上传数据端口与可视化端口
+
+（服务器记得放行8080 9090端口）
+
+——————文件说明——————————————————————————
+codes：上传源文件后对文件处理并计算，最后生成包含电极位置信息和强度信息的三维文件
+codes/SplcV3.py：计算文件
+upload&mysites：django框架，用于原数据上传并传到codes/SplcV3.py进行计算
+HFData.npy：测试文件
+
+
+
+
