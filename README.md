@@ -24,3 +24,5 @@ An online spike sorting system
 上传可视化代码，（使用说明见visualguide.txt）
 ### 2022/5/16
 添加可视化接口格式(列表见visualformat.txt)
+### 2022/5/22
+添加了一个新的数据类型Neurons，用于存储高密度电极阵列的分类结果，即同一神经元被多个电极采到
