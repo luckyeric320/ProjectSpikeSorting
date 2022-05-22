@@ -68,7 +68,7 @@ list of numpy.array，每个通道提取到的所有锋电位的时刻（单位�
 n_spikes
 list，每个通道提取到的锋电位数量
 
-Fs,unit,time_length,channels_names,channels_locs同Raw
+Fs,unit,time_length,channels_names,channels_locs,n_channels同Raw
 
 主要方法：
 mannual_select_by_peaks(ch,lowest,highest)
@@ -79,7 +79,7 @@ sort_by_natural_break()
 使用jenks自然断点法依据峰值大小进行锋电位分类，返回Sorted实例
 
 class Sorted
-存储锋电位分类后的数据
+以通道为单位存储锋电位分类后的数据
 
 主要参数：
 result
@@ -92,10 +92,44 @@ n_neurons
 list of int，每个通道上的推定神经元数量
 
 firing_rate
-list of list of float，每个通道上、每个神经元的发放率（单位：Hz），通道数*（神经元数）
+list of numpy.array，每个通道上、每个神经元的发放率（单位：Hz），通道数*（神经元数）
 
-Fs,unit,time_length,channels_names,channels_locs同Raw
+neuron_id
+list of list of str，每个通道上分类出的神经元的名称，通道数*神经元数，若多个通道上记录到同一个神经元，则对应的神经元名称相同
+
+Fs,unit,time_length,channels_names,channels_locs,n_channels同Raw
 
 主要方法：
 plot_neuron(ch)
 ch为list of int，绘制序号为ch[i]的通道上每个神经元的每次及平均锋电位波形
+
+to_Neurons()
+将Sorted类实例转换成Neurons类实例，返回Neurons类实例
+
+class Neurons
+以神经元为单位存储锋电位分类后的数据
+
+主要参数：
+result
+list of list of numpy.array，每个推定神经元在所有记录到它的通道上的每个锋电位波形，神经元数*（记录到该神经元的通道数*（锋电位数*采样点数））
+
+time_points
+list of numpy.array，每个推定神经元发放的时间点，神经元数*（锋电位数）
+
+n_neurons
+list of int，推定神经元的数量
+
+firing_rate
+numpy.array，每个神经元的发放率（单位：Hz）
+
+neuron_id
+list of str，每个分类出的神经元的名称
+
+channel_id
+list of list of str，对每个神经元，记录到它的每个通道的名称，与channel_names一致，神经元数*记录到该神经元的通道数
+
+Fs,unit,time_length,channels_names,channels_locs,n_channels同Raw
+
+主要方法：
+to_Sorted()
+将Neurons类实例转换成Sorted类实例，返回Sorted类实例
