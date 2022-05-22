@@ -11,6 +11,7 @@ from ddlsorted import Sorted
 def Natural_breaks(D):
         sorted_spikes = [[] for i in range(D.n_channels)]
         time_points = [[] for i in range(D.n_channels)]
+        neuron_id = [[] for i in range(D.n_channels)]
         for ch in range(D.n_channels):
             peak = np.zeros([D.n_spikes[ch]])
             for s in range(D.n_spikes[ch]):
@@ -26,7 +27,8 @@ def Natural_breaks(D):
                     if peak[s]<=breaks[nb+1] and peak[s]>breaks[nb] or (nb==0 and peak[s]==breaks[0]):
                         sorted_spikes[ch][nb] += [waveforms[s,:]]
                         time_points[ch][nb] += [D.time_points[ch][s]]
-        return Sorted(sorted_spikes,time_points,D.Fs,D.time_length,D.channels_names,D.channels_locs)
+            neuron_id[ch] = ['ch'+str(ch)+'_n'+str(nb) for nb in range(nb_class)]
+        return Sorted(sorted_spikes,time_points,D.Fs,D.time_length,D.channels_names,D.channels_locs,neuron_id)
     
 def goodness_of_variance_fit(array, classes):
         classes = jenkspy.jenks_breaks(array, classes)
