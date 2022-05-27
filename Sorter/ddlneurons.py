@@ -5,6 +5,7 @@ Created on Sun May 22 21:43:36 2022
 @author: liuxj
 """
 import numpy as np
+import burst_finding
 
 class Neurons:
     
@@ -37,3 +38,7 @@ class Neurons:
                 neuron_id[channels_names.index(chn)] += [self.neuron_id[n]]
         return Sorted(result,time_points,self.Fs,self.time_length,self.channels_names,self.channels_locs,neuron_id)
                 
+    def find_bursts(self,R,thr):
+        ntp,nresult = burst_finding.burst_finding(self,R,thr)
+        neo_neurons = Neurons(nresult,ntp,self.neuron_id,self.channel_id,self.Fs,self.time_length,self.channels_names,self.channels_locs)
+        return neo_neurons 
