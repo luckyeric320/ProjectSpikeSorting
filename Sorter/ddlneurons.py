@@ -42,3 +42,17 @@ class Neurons:
         ntp,nresult = burst_finding.burst_finding(self,R,thr)
         neo_neurons = Neurons(nresult,ntp,self.neuron_id,self.channel_id,self.Fs,self.time_length,self.channels_names,self.channels_locs)
         return neo_neurons 
+
+    def get_firing_rate(self,timestep):
+        firing_rate_curve = np.zeros([self.n_neurons,int(np.floor(self.time_length/timestep))])
+        for ne in range(self.n_neurons):
+            ns = 0
+            for t in range(np.shape(firing_rate_curve)[1]):
+                for n_s in range(ns,len(self.time_points[ne])):
+                    if self.time_points[ne][n_s]<=(t+1)*timestep:
+                        firing_rate_curve[ne][t] += 1
+                    else:
+                        ns = n_s
+                        break
+        firing_rate_curve = firing_rate_curve/timestep  
+        return firing_rate_curve
