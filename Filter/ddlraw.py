@@ -13,6 +13,7 @@ class Raw:
         self.unit = ''
         self.channels_names = [str(i) for i in range(self.n_channels)]
         self.channels_locs = [np.array([0,0,0]) for i in range(self.n_channels)]
+        self.channels_locs = np.array(self.channels_locs)
 
     def Filter(self, filter_type, wp, ws, gpass, gstop):
         N, critical_points = signal.buttord(wp, ws, gpass, gstop, analog=False, fs=self.Fs)
@@ -81,3 +82,9 @@ class Raw:
             time_points += [samp_points/Fs]
             waveforms += [waves]
         return Detect(waveforms,time_points,Fs,self.time_length,self.unit,self.channels_names,self.channels_locs)
+
+    def set_channels_names(self,channels_names):
+        self.channels_names = channels_names
+        
+    def set_channels_locs(self,locs):
+        self.channels_locs = locs
