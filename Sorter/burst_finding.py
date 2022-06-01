@@ -20,7 +20,7 @@ def burst_finding(N,R,thr):
             result_remain = []
             result = []
             for ch in range(len(N.channel_id[ne])):
-                result += [np.abs(np.mean(N.result[ne][ch][:,np.floor(np.shape(N.result[ne][ch])[1]/2)]))]
+                result += [np.abs(np.mean(N.result[ne][ch][:,int(np.floor(np.shape(N.result[ne][ch])[1]/2))]))]
             qresult = sorted(result,reverse=True)
             for i in range(7):
                 channel_remain += [N.channel_id[ne][result.index(qresult[i])]]
