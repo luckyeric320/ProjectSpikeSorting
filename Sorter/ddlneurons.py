@@ -11,6 +11,7 @@ class Neurons:
     
     def __init__(self,result,time_points,nidset,ch_id,Fs,time_length,channels_names,channels_locs):
         self.result = result
+        print(np.shape(self.result[0][0]))
         self.time_points = time_points
         self.neuron_id = nidset
         self.channel_id = ch_id
@@ -22,8 +23,14 @@ class Neurons:
         self.n_neurons = len(nidset)
         self.firing_rate = np.zeros([self.n_neurons])
         for n in range(self.n_neurons):
-                self.firing_rate[n] = len(time_points[n])/time_length
-                
+            self.firing_rate[n] = len(time_points[n])/time_length
+        self.neurons_locs = np.zeros([self.n_neurons,3])
+        for ne in range(self.n_neurons):
+            a = 0
+            for ch in range(len(self.channel_id[ne])):
+                self.neurons_locs[ne] += self.channels_locs[self.channels_names.index(self.channel_id[ne][ch])]*np.abs(np.mean(self.result[ne][ch][:,int(np.floor(np.shape(self.result[ne][ch])[1]/2))]))
+                a += np.abs(np.mean(self.result[ne][ch][:,int(np.floor(np.shape(self.result[ne][ch])[1]/2))]))
+            self.neurons_locs[ne] = self.neurons_locs[ne]/a
     def to_Sorted(self):
         from ddlsorted import Sorted
         result = [[] for i in range(len(self.channels_names))]
