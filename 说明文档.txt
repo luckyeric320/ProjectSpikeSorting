@@ -27,7 +27,7 @@ channels_names
 list of str，每个通道的名称，默认值为'序号'
 
 channels_locs
-list of numpy.array，每个通道的位置，以（x,y,z）坐标表示，默认值为（0,0,0）
+numpy.array，每个通道的位置，以（x,y,z）坐标表示，默认值为（0,0,0），通道数*3
 
 主要方法：
 select_channels_by_index(channel_list=list of int)
@@ -40,6 +40,12 @@ select_channels_by_name(channel_list=list of str)
 
 set_unit(unit)
 设置幅度的单位
+
+set_channels_names(names)
+设置通道的名称，要求输入list of str
+
+set_channels_locs(locs)
+设置通道的坐标位置，要求输入numpy.array（通道数*3）
 
 scale(gain,drift)
 将数据先缩放到原来的gain倍，再向上移动drift
@@ -129,8 +135,17 @@ list of str，每个分类出的神经元的名称
 channel_id
 list of list of str，对每个神经元，记录到它的每个通道的名称，与channel_names一致，神经元数*记录到该神经元的通道数
 
+neurons_locs
+numpy.array，每个神经元的重心坐标，依据神经元在记录到它的每个通道上的幅值与通道的位置加权平均得到
+
 Fs,unit,time_length,channels_names,channels_locs,n_channels同Raw
 
 主要方法：
 to_Sorted()
 将Neurons类实例转换成Sorted类实例，返回Sorted类实例
+
+find_bursts(thr)
+基于模板匹配的方法寻找被初始分类遗漏的成簇发放的动作电位，需手动设置阈值thr，返回新的Neurons类实例（不成熟，慎用）
+
+get_firing_rate(timestep)
+以timestep为时间窗长度计算神经元发放率随时间的变化，返回numpy.array（神经元数*时间窗数）
