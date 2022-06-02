@@ -7,8 +7,12 @@ class Raw:
     
     def __init__(self,time_series,Fs):
         self.data = time_series
+        if type(self.data) is not np.ndarray:
+            raise ValueError('输入数据必须为numpy.array')
         self.n_channels = np.shape(time_series)[1]
         self.Fs = Fs
+        if (type(self.Fs) is not int) and (type(self.Fs) is not float):
+            raise ValueError('采样率必须为整数或浮点数')
         self.time_length = np.shape(self.data)[0]/Fs
         self.unit = ''
         self.channels_names = [str(i) for i in range(self.n_channels)]
@@ -85,6 +89,12 @@ class Raw:
 
     def set_channels_names(self,channels_names):
         self.channels_names = channels_names
+        if type(self.channels_names) is not list:
+            raise ValueError('通道名称必须为列表')
+        if len(self.channels_names) != self.n_channels:
+            raise ValueError('通道名称列表长度必须与通道数一致')
         
     def set_channels_locs(self,locs):
         self.channels_locs = locs
+        if (type(self.channels_locs) is not np.ndarray) or (np.shape(self.channels_locs) != (self.n_channels,3)):
+            raise ValueError('通道坐标必须为通道数*3的numpy.array')
