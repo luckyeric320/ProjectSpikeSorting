@@ -96,7 +96,7 @@ time_points
 list of list of numpy.array，每个通道、每个推定神经元发放的时间点，通道数*（神经元数*（锋电位数））
 
 n_neurons
-list of int，每个通道上的推定神经元数量
+numpy.array，每个通道上的推定神经元数量
 
 firing_rate
 list of numpy.array，每个通道上、每个神经元的发放率（单位：Hz），通道数*（神经元数）
@@ -118,7 +118,7 @@ class Neurons
 
 主要参数：
 result
-list of list of numpy.array，每个推定神经元在所有记录到它的通道上的每个锋电位波形，神经元数*（记录到该神经元的通道数*（锋电位数*采样点数））
+list of numpy.array，每个推定神经元在所有记录到它的通道上的每个锋电位波形，神经元数*（记录到该神经元的通道数*锋电位数*采样点数）
 
 time_points
 list of numpy.array，每个推定神经元发放的时间点，神经元数*（锋电位数）
