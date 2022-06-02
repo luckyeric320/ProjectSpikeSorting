@@ -12,6 +12,7 @@ def Natural_breaks(D):
         sorted_spikes = [[] for i in range(D.n_channels)]
         sorted_spikel = [[] for i in range(D.n_channels)]
         time_points = [[] for i in range(D.n_channels)]
+        time_pointsl = [[] for i in range(D.n_channels)]
         neuron_id = [[] for i in range(D.n_channels)]
         for ch in range(D.n_channels):
             peak = np.zeros([D.n_spikes[ch]])
@@ -24,13 +25,15 @@ def Natural_breaks(D):
             sorted_spikel[ch] = [[] for i in range(nb_class)]
             sorted_spikes[ch] = [[] for i in range(nb_class)]
             time_points[ch] = [[] for i in range(nb_class)]
+            time_pointsl[ch] = [[] for i in range(nb_class)]
             for s in range(D.n_spikes[ch]):
                 for nb in range(nb_class):
                     if peak[s]<=breaks[nb+1] and peak[s]>breaks[nb] or (nb==0 and peak[s]==breaks[0]):
                         sorted_spikel[ch][nb] += [waveforms[s,:]]
-                        time_points[ch][nb] += [D.time_points[ch][s]]
+                        time_pointsl[ch][nb] += [D.time_points[ch][s]]
             for nb in range(nb_class):
                 sorted_spikes[ch][nb] = np.array(sorted_spikel[ch][nb])
+                time_points[ch][nb] = np.array(time_pointsl[ch][nb])
             neuron_id[ch] = ['ch'+str(ch)+'_n'+str(nb) for nb in range(nb_class)]
         return Sorted(sorted_spikes,time_points,D.Fs,D.time_length,D.channels_names,D.channels_locs,neuron_id)
     
