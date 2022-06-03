@@ -62,6 +62,10 @@ extract_by_median(k)
 使用绝对值中位数的k倍为阈值，提取锋电位数据（以峰值为中心，总长度2ms）
 返回Detect实例
 
+sort_by_Klusta()
+调用klusta方法对数据进行尖峰电位分类
+返回一个Neurons类实例
+
 class Detect:
 存储检测到的峰值数据
 
@@ -149,3 +153,9 @@ find_bursts(thr)
 
 get_firing_rate(timestep)
 以timestep为时间窗长度计算神经元发放率随时间的变化，返回numpy.array（神经元数*时间窗数）
+
+plot_neurons_locs()
+绘制通道位置（正方形）及推定神经元（星形）的位置
+
+plot_neurons_spikes()
+绘制每个神经元在每个通道上的波形及平均波形
