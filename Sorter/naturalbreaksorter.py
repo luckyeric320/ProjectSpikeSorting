@@ -35,7 +35,7 @@ def Natural_breaks(D):
                 sorted_spikes[ch][nb] = np.array(sorted_spikel[ch][nb])
                 time_points[ch][nb] = np.array(time_pointsl[ch][nb])
             neuron_id[ch] = ['ch'+str(ch)+'_n'+str(nb) for nb in range(nb_class)]
-        return Sorted(sorted_spikes,time_points,D.Fs,D.time_length,D.channels_names,D.channels_locs,neuron_id)
+        return Sorted(sorted_spikes,time_points,D.Fs,D.time_length,D.channels_names,D.channels_locs,neuron_id,D.unit)
     
 def goodness_of_variance_fit(array, classes):
         classes = jenkspy.jenks_breaks(array, classes)
