@@ -6,10 +6,11 @@ Created on Sun May 22 21:43:36 2022
 """
 import numpy as np
 import burst_finding
+import matplotlib.pyplot as plt
 
 class Neurons:
     
-    def __init__(self,result,time_points,nidset,ch_id,Fs,time_length,channels_names,channels_locs):
+    def __init__(self,result,time_points,nidset,ch_id,Fs,time_length,channels_names,channels_locs,unit):
         self.result = result
         if type(self.result) is not list:
             raise ValueError('分类结果必须为list of numpy.array')
@@ -69,6 +70,7 @@ class Neurons:
                 self.neurons_locs[ne] += self.channels_locs[self.channels_names.index(self.channel_id[ne][ch])]*np.abs(np.mean(self.result[ne][ch][:,int(np.floor(np.shape(self.result[ne][ch])[1]/2))]))
                 a += np.abs(np.mean(self.result[ne][ch][:,int(np.floor(np.shape(self.result[ne][ch])[1]/2))]))
             self.neurons_locs[ne] = self.neurons_locs[ne]/a
+        self.unit = unit
             
     def to_Sorted(self):
         from ddlsorted import Sorted
@@ -82,7 +84,7 @@ class Neurons:
                 result[channels_names.index(chn)] += [self.result[n][ch]]
                 time_points[channels_names.index(chn)] += [self.time_points[n]]
                 neuron_id[channels_names.index(chn)] += [self.neuron_id[n]]
-        return Sorted(result,time_points,self.Fs,self.time_length,self.channels_names,self.channels_locs,neuron_id)
+        return Sorted(result,time_points,self.Fs,self.time_length,self.channels_names,self.channels_locs,neuron_id,self.unit)
                 
     def find_bursts(self,R,thr):
         ntp,nresult = burst_finding.burst_finding(self,R,thr)
@@ -102,3 +104,24 @@ class Neurons:
                         break
         firing_rate_curve = firing_rate_curve/timestep  
         return firing_rate_curve
+    
+    def plot_neurons_locs(self):
+        for ch in range(self.n_channels):
+            plt.scatter(self.channels_locs[ch][0],self.channels_locs[ch][1],c='y',marker='s')
+        for ne in range(self.n_neurons):
+            plt.scatter(self.neurons_locs[ne][0],self.neurons_locs[ne][1],marker='*')
+        plt.show()
+        
+    def plot_neurons_spikes(self):
+        for ne in range(self.n_neurons):
+            print('当前神经元ID为'+str(self.neuron_id[ne]))
+            print('在'+str(len(self.channel_id[ne]))+"个通道上被记录到")
+            for i in range(len(self.channel_id[ne])):
+                plt.figure()
+                for ii in range(np.shape(self.result[ne][i])[0]):
+                    plt.plot(self.result[ne][i][ii],color='grey')
+                plt.plot(np.mean(self.result[ne][i],axis=0),color='red')
+                plt.xlabel('time(*1/Fs)')
+                plt.ylabel(self.unit)
+                plt.title('Neuron:'+str(self.neuron_id[ne])+' '+'Channel:'+str(self.channel_id[ne][i]))
+                plt.show()
