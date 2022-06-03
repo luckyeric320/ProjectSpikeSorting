@@ -47,6 +47,3 @@ class Detect:
     def sort_by_natural_break(self):
         sortresult = nbs.Natural_breaks(self)
         return sortresult
-    
-        
-            
