@@ -1,6 +1,7 @@
 from scipy import signal
 import numpy as np
 from ddldetect import Detect
+import ddlsorters
 
 class Raw:
 #本类存储原始波形数据，格式为np.array(dtype='float32')，shape=[n_samples,n_channels]
@@ -98,3 +99,7 @@ class Raw:
         self.channels_locs = locs
         if (type(self.channels_locs) is not np.ndarray) or (np.shape(self.channels_locs) != (self.n_channels,3)):
             raise ValueError('通道坐标必须为通道数*3的numpy.array')
+            
+    def sort_by_Klusta(self):
+        neurons = ddlsorters.KlustaSorter(self)
+        return neurons
