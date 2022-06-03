@@ -29,4 +29,4 @@ An online spike sorting system
 ### 2022/6/1
 修复了一些bug，添加了计算神经元“重心”位置的方法
 ### 2022/6/3
-增加了使用“Klusta”进行分类的方法，示例见“sorter”文件夹中的demo.py
+增加了使用“Klusta”进行分类的方法，示例见“sorter”文件夹中的SorterDemo.ipynb
