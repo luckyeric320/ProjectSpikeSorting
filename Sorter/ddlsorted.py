@@ -10,7 +10,7 @@ from ddlneurons import Neurons
 
 class Sorted:
     
-    def __init__(self,sorting_result,time_points,Fs,time_length,channels_names,channels_locs,neuron_id):
+    def __init__(self,sorting_result,time_points,Fs,time_length,channels_names,channels_locs,neuron_id,unit):
         self.result = sorting_result
         if type(self.result) is not list:
             raise ValueError('分类结果必须为list of list of numpy.array')
@@ -69,6 +69,7 @@ class Sorted:
         for ch in range(self.n_channels):
             for n in range(self.n_neurons[ch]):
                 self.firing_rate[ch][n] = len(time_points[ch][n])/time_length
+        self.unit = unit
     
     def plot_neuron(self,ch):
         for i in range(self.n_neurons[ch]):
@@ -98,5 +99,5 @@ class Sorted:
         for n in range(len(result)):
             results += [[]]
             results[n] = np.array(result[n])
-        return Neurons(results,time_points,nidset,ch_id,self.Fs,self.time_length,self.channels_names,self.channels_locs)
+        return Neurons(results,time_points,nidset,ch_id,self.Fs,self.time_length,self.channels_names,self.channels_locs,self.unit)
     
