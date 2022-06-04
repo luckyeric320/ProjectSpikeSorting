@@ -62,8 +62,8 @@ extract_by_median(k)
 使用绝对值中位数的k倍为阈值，提取锋电位数据（以峰值为中心，总长度2ms）
 返回Detect实例
 
-sort_by_Klusta()
-调用klusta方法对数据进行尖峰电位分类
+sort_by(sortername)
+调用指定的方法对数据进行尖峰电位分类
 返回一个Neurons类实例
 
 class Detect:
