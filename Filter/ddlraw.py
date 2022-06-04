@@ -100,6 +100,6 @@ class Raw:
         if (type(self.channels_locs) is not np.ndarray) or (np.shape(self.channels_locs) != (self.n_channels,3)):
             raise ValueError('通道坐标必须为通道数*3的numpy.array')
             
-    def sort_by_Klusta(self):
-        neurons = ddlsorters.KlustaSorter(self)
+    def sort_by(self,sortername):
+        neurons = ddlsorters.Sorter(self,sortername)
         return neurons
