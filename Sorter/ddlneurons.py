@@ -105,17 +105,30 @@ class Neurons:
         firing_rate_curve = firing_rate_curve/timestep  
         return firing_rate_curve
     
-    def plot_neurons_locs(self):
-        for ch in range(self.n_channels):
-            plt.scatter(self.channels_locs[ch][0],self.channels_locs[ch][1],c='y',marker='s')
-        for ne in range(self.n_neurons):
-            plt.scatter(self.neurons_locs[ne][0],self.neurons_locs[ne][1],marker='*')
+    def plot_neurons_locs(self,time,title):
+        plt.scatter(self.channels_locs[:,0],self.channels_locs[:,1],c='y',marker='s')
+        if time == 'all':
+            fr = self.firing_rate
+        elif (len(time) == 2) and ((type(time[0]) is float) or (type(time[0]) is int)) and ((type(time[1]) is float) or (type(time[1]) is int)):
+            fr = np.zeros([self.n_neurons])
+            for ne in range(self.n_neurons):
+                for n_s in range(ns,len(self.time_points[ne])):
+                    if (self.time_points[ne][n_s]>=time[0]) and (self.time_points[ne][n_s]<time[0]):
+                        fr[ne] += 1
+                    elif self.time_points[ne][n_s]>=time[0]:
+                        break
+            fr = fr/(time[1]-time[0])
+        plt.scatter(self.neurons_locs[:,0],self.neurons_locs[:,1],c=fr,cmap='Reds',marker='*')
+        plt.title(title)
         plt.show()
         
     def plot_neurons_spikes(self):
         for ne in range(self.n_neurons):
             print('当前神经元ID为'+str(self.neuron_id[ne]))
             print('在'+str(len(self.channel_id[ne]))+"个通道上被记录到")
+            plt.figure()
+            plt.scatter(self.channels_locs[:,0],self.channels_locs[:,1],c='y',marker='s')
+            plt.scatter(self.neurons_locs[ne,0],self.neurons_locs[ne,1],c='r',marker='*')
             for i in range(len(self.channel_id[ne])):
                 plt.figure()
                 for ii in range(np.shape(self.result[ne][i])[0]):
