@@ -6,6 +6,8 @@ An online spike sorting system
 .raw格式，可使用numpy.memmap读取
 ### 电极位置
 .prb格式，可直接用记事本打开
+### 接受上传的数据类型
+zip文件，包含3个子文件，raw_data.npy包含原始数据，channels_locs.npy包含电极位置信息（二维或三维），info.txt包含补充信息，示例见info.txt
 
 ## 工作日志
 ### 2022/4/27
@@ -29,4 +31,6 @@ An online spike sorting system
 ### 2022/6/1
 修复了一些bug，添加了计算神经元“重心”位置的方法
 ### 2022/6/3
-增加了使用“Klusta”进行分类的方法，示例见“sorter”文件夹中的SorterDemo.ipynb
+增加了使用“Klusta”等方法进行分类的方法，示例见“sorter”文件夹中的SorterDemo.ipynb
+### 2022/6/8
+增加了使用gamma值比较不同分类器结果的方法
