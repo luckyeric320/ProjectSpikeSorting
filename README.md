@@ -7,7 +7,7 @@ An online spike sorting system
 ### 电极位置
 .prb格式，可直接用记事本打开
 ### 接受上传的数据类型
-zip文件，包含3个子文件，raw_data.npy包含原始数据，channels_locs.npy包含电极位置信息（二维或三维），info.txt包含补充信息，示例见info.txt
+zip文件，包含3个子文件，raw_data.npy包含原始数据，channels_locs.npy包含电极位置信息（二维或三维），info.txt包含补充信息，示例见upload.zip
 
 ## 工作日志
 ### 2022/4/27
