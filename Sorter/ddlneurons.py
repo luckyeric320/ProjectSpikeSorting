@@ -122,8 +122,14 @@ class Neurons:
         plt.title(title)
         plt.show()
         
-    def plot_neurons_spikes(self):
-        for ne in range(self.n_neurons):
+    def plot_neurons_spikes(self,n_id):
+        if n_id == 'all':
+            nelist = [i for i in range(self.n_neurons)]
+        elif type(n_id) is int:
+            nelist = [n_id]
+        elif type(n_id) is str:
+            nelist = [self.neuron_id.index(n_id)]
+        for ne in nelist:
             print('当前神经元ID为'+str(self.neuron_id[ne]))
             print('在'+str(len(self.channel_id[ne]))+"个通道上被记录到")
             plt.figure()
