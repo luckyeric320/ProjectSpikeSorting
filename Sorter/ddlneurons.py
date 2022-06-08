@@ -71,6 +71,7 @@ class Neurons:
                 a += np.abs(np.mean(self.result[ne][ch][:,int(np.floor(np.shape(self.result[ne][ch])[1]/2))]))
             self.neurons_locs[ne] = self.neurons_locs[ne]/a
         self.unit = unit
+        self.neurons_info = ['' for i in range(self.n_neurons)]
             
     def to_Sorted(self):
         from ddlsorted import Sorted
@@ -135,6 +136,7 @@ class Neurons:
             plt.figure()
             plt.scatter(self.channels_locs[:,0],self.channels_locs[:,1],c='y',marker='s')
             plt.scatter(self.neurons_locs[ne,0],self.neurons_locs[ne,1],c='r',marker='*')
+            plt.title(self.neuron_id[ne]+'\n'+self.neurons_info[ne])
             for i in range(len(self.channel_id[ne])):
                 plt.figure()
                 for ii in range(np.shape(self.result[ne][i])[0]):

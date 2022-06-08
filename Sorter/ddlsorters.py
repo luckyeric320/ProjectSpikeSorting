@@ -31,7 +31,6 @@ def Sorter(raw,sorter_name):
     time_points_s = []
     neurons_result = []
     channel_id = []
-    unit_id = []
     for u in range(len(sorting.unit_ids)):
         neuron_result = []
         time_points += [[]]
@@ -53,7 +52,7 @@ def Sorter(raw,sorter_name):
             neurons_result += [np.array(neuron_result)]
             channel_id += [channel_id_tmp]
             time_points_s += [time_points[-1]/raw.Fs]
-            unit_id += [sorting.unit_ids[u]]
+    unit_id = [sorter_name+' '+str(i) for i in range(len(time_points_s))]
     from ddlneurons import Neurons
     neurons = Neurons(neurons_result,time_points_s,unit_id,channel_id,Fs,raw.time_length,raw.channels_names,raw.channels_locs,raw.unit)
     return neurons
