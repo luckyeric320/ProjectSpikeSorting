@@ -62,7 +62,7 @@ extract_by_median(k)
 使用绝对值中位数的k倍为阈值，提取锋电位数据（以峰值为中心，总长度2ms）
 返回Detect实例
 
-sort_by(sortername)
+sort_by()
 调用指定的方法对数据进行尖峰电位分类
 返回一个Neurons类实例
 
@@ -155,7 +155,12 @@ get_firing_rate(timestep)
 以timestep为时间窗长度计算神经元发放率随时间的变化，返回numpy.array（神经元数*时间窗数）
 
 plot_neurons_locs(time,title)
-绘制通道位置（正方形）及推定神经元（星形）的位置，time可为'all'或[start_time,end_time]，星形的颜色深浅表示这段时间内的发放率
+绘制通道位置（正方形）及推定神经元（星形）的位置，星形的颜色表示time范围内的发放率，若time=='all'，则为平均发放率
 
 plot_neurons_spikes()
 绘制每个神经元在每个通道上的波形及平均波形
+
+其他方法：
+
+ddlsorters.compare_sorter_results(Neurons1,Neurons2)
+计算两种方法得到的分类结果之间的相似度（gamma值），返回numpy.array，Neurons1神经元数*Neurons2神经元数，第i,j处表示Neurons1中第i个神经元和Neurons2中第j个神经元之间的gamma值，gamma值越大，相似度越高
