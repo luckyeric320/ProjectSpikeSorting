@@ -57,12 +57,15 @@ def Sorter(raw,sorter_name):
     neurons = Neurons(neurons_result,time_points_s,unit_id,channel_id,Fs,raw.time_length,raw.channels_names,raw.channels_locs,raw.unit)
     return neurons
 
-def compare_sorter_results(N1,N2):
+def compare_sorter_results(N1,N2,sortername1,sortername2):
     gamma = np.zeros([N1.n_neurons,N2.n_neurons])
     for ne1 in range(N1.n_neurons):
         for ne2 in range(N2.n_neurons):
             if len([x for x in N1.channel_id[ne1] if x in N2.channel_id[ne2]])>0:
                 gamma[ne1][ne2] = get_gamma(N1.time_points[ne1],N2.time_points[ne2],0.0005) 
+                if gamma[ne1][ne2] >= 0.8:
+                    N1.neurons_info[ne1] += 'Approximately identical to %s neuron %s\n'%(sortername2,N2.neuron_id[ne2])
+                    N2.neurons_info[ne2] += 'Approximately identical to %s neuron %s\n'%(sortername1,N1.neuron_id[ne1])
     return gamma
 
 def get_gamma(trace1,trace2,tolerance):

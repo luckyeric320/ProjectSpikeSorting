@@ -63,7 +63,8 @@ def burst_finding(N,R,thr):
                     isi_mean /= n_of_spike
                     for nn in range(n_of_spike-1):
                         amp = np.append(amp,result_remain[:,sp-nn-1,int(np.floor(np.shape(result_remain)[2]/2))]/np.mean(result_remain[:,:,int(np.floor(np.shape(result_remain)[2]/2))],axis=1))
-                        Y = np.append(Y,isi_mean/(n_of_spike-nn)/isith)
+                        for nch in range(len(result_remain[:,sp-nn-1,int(np.floor(np.shape(result_remain)[2]/2))]/np.mean(result_remain[:,:,int(np.floor(np.shape(result_remain)[2]/2))],axis=1))):
+                            Y = np.append(Y,isi_mean/(n_of_spike-nn)/isith)
                 isi_mean = 0
                 n_of_spike = 0
         if np.shape(amp)[0]>0:
@@ -95,8 +96,6 @@ def burst_finding(N,R,thr):
                                 X = np.array([])
                                 for ch in channel_remain:
                                     X = np.append(X,R.data[int(t0+t):int(t0+t)+np.shape(result_remain)[2],R.channels_names.index(ch)])
-                                if len(channel_remain)>1:
-                                    X.reshape((np.shape(X)[0]*np.shape(X)[1]))
                                 D[t] = mu*(X.dot(np.dot(Ci,ksit))-mu/2*ksi.dot(np.dot(Ci,ksit)))+np.log(0.5)
                             peaks,_ = signal.find_peaks(D,height=thr)
                             #阈值设在多少合适呢？
