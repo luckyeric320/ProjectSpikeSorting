@@ -157,11 +157,11 @@ find_bursts(thr)
 get_firing_rate(timestep)
 以timestep为时间窗长度计算神经元发放率随时间的变化，返回numpy.array（神经元数*时间窗数）
 
-plot_neurons_locs(time,title)
-绘制通道位置（正方形）及推定神经元（星形）的位置，星形的颜色表示time范围内的发放率，若time=='all'，则为平均发放率
+plot_neurons_locs(time,title,sort_by_gamma=False,gamma=None)
+绘制通道位置（正方形）及推定神经元（星形）的位置，星形的颜色表示time范围内的发放率，若time=='all'，则为平均发放率；若sort_by_gamma==True，gamma>0.8者使用红色，其他使用绿色
 
-plot_neurons_spikes(n_id)
-若n_id == 'all'，绘制所有神经元在每个通道上的波形及平均波形；若n_id为int或str，绘制指定神经元在每个通道上的波形及平均波形
+plot_neurons_spikes(n_id,gamma=None)
+若n_id == 'all'，绘制所有神经元在每个通道上的波形及平均波形；若n_id == 'gamma'，按gamma顺序绘制；若n_id为int或str，绘制指定神经元在每个通道上的波形及平均波形
 
 其他方法：
 
