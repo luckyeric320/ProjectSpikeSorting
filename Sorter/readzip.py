@@ -3,7 +3,7 @@ from ddlsorters import *
 from zipfile import ZipFile
 import numpy as np
 #读取zip文件到Raw
-file = ZipFile('upload.zip','r')
+file = ZipFile('./upload.zip','r')
 file.extractall()
 rd = np.load('raw_data.npy')
 cl = np.load('channels_locs.npy')
@@ -23,16 +23,22 @@ elif np.shape(cl)[1] == 2:
 #滤波
 raw = raw.get_spikes()
 #使用各种方法分类
-Neurons_list = [[] for i in range(4)]
-sorternames =  ['Klusta','Tridesclous','Spykingcircus','Herdingspikes']
-for i in range(4):
+Neurons_list = [[] for i in range(3)]
+sorternames =  ['Klusta','Tridesclous','Spykingcircus']
+gamma = [[] for i in range(3)]
+for i in range(3):
     sortername = sorternames[i]
     Neurons_list[i] = raw.sort_by(sortername)
-    #可视化
-    Neurons_list[i].plot_neurons_locs('all',sortername)#二维电极及神经元位置图
+    gamma[i] = np.zeros([Neurons_list[i].n_neurons,1])
 #比较分类结果
-for i in range(4):
-    for j in range(i+1,4):
+for i in range(3):
+    for j in range(i+1,3):
         gamma_matrix = compare_sorter_results(Neurons_list[i],Neurons_list[j],sorternames[i],sorternames[j]) 
-for i in range(4):
-    Neurons_list[i].plot_neurons_spikes('all')#每个神经元在每个电极上的波形图（多图）
+        gamma[i] = np.append(gamma[i],np.max(gamma_matrix,axis=1).reshape(gamma_matrix.shape[0],1),axis=1)
+        gamma[j] = np.append(gamma[j],np.max(gamma_matrix,axis=0).reshape(gamma_matrix.shape[1],1),axis=1)
+for i in range(3):
+    gamma[i] = np.max(gamma[i],axis=1)
+#可视化
+for i in range(3):
+    Neurons_list[i].plot_neurons_locs('all',sortername,sort_by_gamma=True,gamma=gamma[i])#二维电极及神经元位置图
+    Neurons_list[i].plot_neurons_spikes('gamma',gamma=gamma[i])#每个神经元在每个电极上的波形图（多图）

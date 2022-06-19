@@ -106,7 +106,7 @@ class Neurons:
         firing_rate_curve = firing_rate_curve/timestep  
         return firing_rate_curve
     
-    def plot_neurons_locs(self,time,title):
+    def plot_neurons_locs(self,time,title,sort_by_gamma=False,gamma=None):
         plt.scatter(self.channels_locs[:,0],self.channels_locs[:,1],c='y',marker='s')
         if time == 'all':
             fr = self.firing_rate
@@ -119,13 +119,22 @@ class Neurons:
                     elif self.time_points[ne][n_s]>=time[0]:
                         break
             fr = fr/(time[1]-time[0])
-        plt.scatter(self.neurons_locs[:,0],self.neurons_locs[:,1],c=fr,cmap='Reds',marker='*')
+        if sort_by_gamma == False:
+            plt.scatter(self.neurons_locs[:,0],self.neurons_locs[:,1],c=fr,cmap='Reds',marker='*')
+        elif sort_by_gamma == True:
+            for ne in range(self.n_neurons):
+                if gamma[ne] > 0.8:
+                    plt.scatter(self.neurons_locs[ne,0],self.neurons_locs[ne,1],c=fr[ne],cmap='Reds',marker='*',vmin=0,vmax=max(fr))
+                else:
+                    plt.scatter(self.neurons_locs[ne,0],self.neurons_locs[ne,1],c=fr[ne],cmap='Greens',marker='*',vmin=0,vmax=max(fr))
         plt.title(title)
         plt.show()
         
-    def plot_neurons_spikes(self,n_id):
+    def plot_neurons_spikes(self,n_id,gamma=None):
         if n_id == 'all':
             nelist = [i for i in range(self.n_neurons)]
+        elif n_id == 'gamma':
+            nelist = np.argsort(-gamma)
         elif type(n_id) is int:
             nelist = [n_id]
         elif type(n_id) is str:
