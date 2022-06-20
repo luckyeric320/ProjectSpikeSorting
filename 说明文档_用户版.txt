@@ -1,0 +1,18 @@
+上传格式：
+本系统接受zip格式的上传文件。
+在zip文件中，需要包含如下3个文件：
+raw_data.npy应为npy二进制文件，包含原始数据（采样点数*通道数）
+channels_locs.npy应为npy二进制文件，包含电极位置（通道数*2或3）
+info.txt应为txt文件，包含其他信息，格式如下：
+
+Fs = int(采样率)
+drift = float(由raw_data.npy中原始数据得到真值需要向上移动的长度)
+gain = float(由raw_data.npy中原始数据得到真值需要乘的倍数)
+unit = str(单位，如'uV')
+
+下载格式：
+下载文件为zip格式，包含每种分类器得到的每个神经元的数据
+解压后，在每种分类器的文件夹下，有如下文件：
+neurons_locs.npy，包含神经元推定位置（神经元数*2）
+timeseries_(sortername)+(id).npy，包含神经元的发放时间点（单位：秒）
+waveform_(sortername)+(id).npy，包含神经元每次发放的原始波形（记录到该神经元的通道数*锋电位数*采样点数）
