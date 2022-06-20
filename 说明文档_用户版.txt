@@ -16,3 +16,4 @@ unit = str(单位，如'uV')
 neurons_locs.npy，包含神经元推定位置（神经元数*2）
 timeseries_(sortername)+(id).npy，包含神经元的发放时间点（单位：秒）
 waveform_(sortername)+(id).npy，包含神经元每次发放的原始波形（记录到该神经元的通道数*锋电位数*采样点数）
+此外，还有一张graph.png，为三种分类器分类得到的结果的对应关系，连线越粗表明一致性越好
