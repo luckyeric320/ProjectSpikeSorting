@@ -128,7 +128,7 @@ time_points
 list of numpy.array，每个推定神经元发放的时间点，神经元数*（锋电位数）
 
 n_neurons
-list of int，推定神经元的数量
+int，推定神经元的数量
 
 firing_rate
 numpy.array，每个神经元的发放率（单位：Hz）
