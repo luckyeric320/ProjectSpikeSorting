@@ -113,10 +113,10 @@ class Neurons:
         elif (len(time) == 2) and ((type(time[0]) is float) or (type(time[0]) is int)) and ((type(time[1]) is float) or (type(time[1]) is int)):
             fr = np.zeros([self.n_neurons])
             for ne in range(self.n_neurons):
-                for n_s in range(ns,len(self.time_points[ne])):
-                    if (self.time_points[ne][n_s]>=time[0]) and (self.time_points[ne][n_s]<time[0]):
+                for n_s in range(0,len(self.time_points[ne])):
+                    if (self.time_points[ne][n_s]>=time[0]) and (self.time_points[ne][n_s]<time[1]):
                         fr[ne] += 1
-                    elif self.time_points[ne][n_s]>=time[0]:
+                    elif self.time_points[ne][n_s]>=time[1]:
                         break
             fr = fr/(time[1]-time[0])
         if sort_by_gamma == False:
