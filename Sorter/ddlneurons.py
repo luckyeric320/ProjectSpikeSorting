@@ -130,7 +130,7 @@ class Neurons:
                     plt.scatter(self.neurons_locs[ne,0],self.neurons_locs[ne,1],c=fr[ne],cmap='Greens',marker='*',vmin=0,vmax=max(fr))
         plt.title(title)
         if savefig == True:
-            plt.savefig(os.path.join(directory,'locs.png'))
+            plt.savefig(os.path.join(directory,'locs_'+str(time)+'.png'))
         plt.show()
         
     def plot_neurons_spikes(self,n_id,gamma=None,savefig=False,directory=None):
@@ -149,6 +149,8 @@ class Neurons:
             plt.scatter(self.channels_locs[:,0],self.channels_locs[:,1],c='y',marker='s')
             plt.scatter(self.neurons_locs[ne,0],self.neurons_locs[ne,1],c='r',marker='*')
             plt.title(self.neuron_id[ne]+'\n'+self.neurons_info[ne])
+            if savefig == True:
+                plt.savefig(os.path.join(directory,'Neuron_'+str(self.neuron_id[ne])+' _loc.png'))
             for i in range(len(self.channel_id[ne])):
                 plt.figure()
                 for ii in range(np.shape(self.result[ne][i])[0]):
@@ -158,5 +160,5 @@ class Neurons:
                 plt.ylabel(self.unit)
                 plt.title('Neuron:'+str(self.neuron_id[ne])+' '+'Channel:'+str(self.channel_id[ne][i]))
                 if savefig == True:
-                    plt.savefig(os.path.join(directory,str(self.neuron_id[ne])+'.png'))
+                    plt.savefig(os.path.join(directory,'Neuron_'+str(self.neuron_id[ne])+'_'+'Channel_'+str(self.channel_id[ne][i])+'.png'))
                 plt.show()
