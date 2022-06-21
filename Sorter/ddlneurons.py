@@ -150,7 +150,7 @@ class Neurons:
             plt.scatter(self.neurons_locs[ne,0],self.neurons_locs[ne,1],c='r',marker='*')
             plt.title(self.neuron_id[ne]+'\n'+self.neurons_info[ne])
             if savefig == True:
-                plt.savefig(os.path.join(directory,'Neuron_'+str(self.neuron_id[ne])+' _loc.png'))
+                plt.savefig(os.path.join(directory,'Neuron_'+str(self.neuron_id[ne])+' _loc.png'),bbox_inches='tight')
             for i in range(len(self.channel_id[ne])):
                 plt.figure()
                 for ii in range(np.shape(self.result[ne][i])[0]):
@@ -160,5 +160,5 @@ class Neurons:
                 plt.ylabel(self.unit)
                 plt.title('Neuron:'+str(self.neuron_id[ne])+' '+'Channel:'+str(self.channel_id[ne][i]))
                 if savefig == True:
-                    plt.savefig(os.path.join(directory,'Neuron_'+str(self.neuron_id[ne])+'_'+'Channel_'+str(self.channel_id[ne][i])+'.png'))
+                    plt.savefig(os.path.join(directory,'Neuron_'+str(self.neuron_id[ne])+'_'+'Channel_'+str(self.channel_id[ne][i])+'.png'),bbox_inches='tight')
                 plt.show()

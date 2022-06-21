@@ -6,6 +6,7 @@ Created on Wed Apr 27 13:36:56 2022
 """
 import numpy as np
 import ddltools.naturalbreaksorter as nbs
+import ddltools.PCAanalysis as pcas
 import matplotlib.pyplot as plt
 
 class Detect:
@@ -48,5 +49,24 @@ class Detect:
         sortresult = nbs.Natural_breaks(self)
         return sortresult
     
-        
-            
+    def sort_by_pca(self,ncomps,n_clusters):
+        pca_results, kmeans_results = pcas.pca_kmeans(self,ncomps,n_clusters)
+        pcas.plot_pca(pca_results,kmeans_results)
+        sorting_result = []
+        time_points = []
+        neuron_id = []
+        for ch in range(self.n_channels):
+            sorting_result += [[[] for i in range(n_clusters)]]
+            time_points += [[[] for i in range(n_clusters)]]
+            sorting_resultl = [[] for i in range(n_clusters)]
+            time_pointsl = [[] for i in range(n_clusters)]
+            for sp in range(self.n_spikes[ch]):
+                sorting_resultl[kmeans_results[ch][sp]] += [self.waveforms[ch][sp]]
+                time_pointsl[kmeans_results[ch][sp]] += [self.time_points[ch][sp]]
+            for i in range(n_clusters):
+                sorting_result[ch][i] = np.array(sorting_resultl[i])
+                time_points[ch][i] = np.array(time_pointsl[i])
+            neuron_id += [[(str(self.channels_names[ch])+'_pca_sorted'+str(i)) for i in range(n_clusters)]]
+        from ddlsorted import Sorted
+        S = Sorted(sorting_result,time_points,self.Fs,self.time_length,self.channels_names,self.channels_locs,neuron_id,self.unit)
+        return S
