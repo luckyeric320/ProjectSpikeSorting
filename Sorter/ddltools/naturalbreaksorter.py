@@ -6,6 +6,8 @@ Created on Sat May 14 16:28:13 2022
 """
 import numpy as np
 import jenkspy
+import sys 
+sys.path.append("..") 
 from ddlsorted import Sorted
 
 def Natural_breaks(D):
