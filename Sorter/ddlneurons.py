@@ -5,8 +5,9 @@ Created on Sun May 22 21:43:36 2022
 @author: liuxj
 """
 import numpy as np
-import burst_finding
+from ddltools import burst_finding
 import matplotlib.pyplot as plt
+import os
 
 class Neurons:
     
@@ -106,7 +107,7 @@ class Neurons:
         firing_rate_curve = firing_rate_curve/timestep  
         return firing_rate_curve
     
-    def plot_neurons_locs(self,time,title,sort_by_gamma=False,gamma=None):
+    def plot_neurons_locs(self,time,title,sort_by_gamma=False,gamma=None,savefig=False,directory=None):
         plt.scatter(self.channels_locs[:,0],self.channels_locs[:,1],c='y',marker='s')
         if time == 'all':
             fr = self.firing_rate
@@ -128,9 +129,11 @@ class Neurons:
                 else:
                     plt.scatter(self.neurons_locs[ne,0],self.neurons_locs[ne,1],c=fr[ne],cmap='Greens',marker='*',vmin=0,vmax=max(fr))
         plt.title(title)
+        if savefig == True:
+            plt.savefig(os.path.join(directory,'locs.png'))
         plt.show()
         
-    def plot_neurons_spikes(self,n_id,gamma=None):
+    def plot_neurons_spikes(self,n_id,gamma=None,savefig=False,directory=None):
         if n_id == 'all':
             nelist = [i for i in range(self.n_neurons)]
         elif n_id == 'gamma':
@@ -154,4 +157,6 @@ class Neurons:
                 plt.xlabel('time(*1/Fs)')
                 plt.ylabel(self.unit)
                 plt.title('Neuron:'+str(self.neuron_id[ne])+' '+'Channel:'+str(self.channel_id[ne][i]))
+                if savefig == True:
+                    plt.savefig(os.path.join(directory,str(self.neuron_id[ne])+'.png'))
                 plt.show()

@@ -5,7 +5,7 @@ Created on Wed Apr 27 13:36:56 2022
 @author: liuxj
 """
 import numpy as np
-import naturalbreaksorter as nbs
+import ddltools.naturalbreaksorter as nbs
 import matplotlib.pyplot as plt
 
 class Detect:
