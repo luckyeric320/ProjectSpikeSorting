@@ -77,6 +77,9 @@ class Sorted:
             for ii in range(np.shape(self.result[ch][i])[0]):
                 plt.plot(self.result[ch][i][ii],color='grey')
             plt.plot(np.mean(self.result[ch][i],axis=0),color='red')
+            plt.xlabel('time(*1/Fs)')
+            plt.ylabel(self.unit)
+            plt.title(self.neuron_id[ch][i])
             plt.show()
             
     def to_Neurons(self):
