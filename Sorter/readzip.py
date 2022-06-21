@@ -4,6 +4,8 @@ from ddlraw import Raw
 from ddlsorters import *
 from zipfile import ZipFile
 import numpy as np
+import os
+
 #读取zip文件到Raw
 file = ZipFile('./upload.zip','r')
 file.extractall()
@@ -33,6 +35,7 @@ for i in range(3):
     sortername = sorternames[i]
     Neurons_list[i] = raw.sort_by(sortername)
     gamma[i] = np.zeros([Neurons_list[i].n_neurons,1])
+    os.makedirs('output_result/'+sorternames[i],exist_ok=True)
 #比较分类结果
 for i in range(3):
     for j in range(i+1,3):
@@ -46,14 +49,12 @@ for i in range(3):
     #以下内容绘制到‘./str(sorternames[i])’
     for t in range(int(Neurons_list[i].time_length)):
         Neurons_list[i].plot_neurons_locs([t,t+1],sorternames[i],sort_by_gamma=True,gamma=gamma[i])
-    Neurons_list[i].plot_neurons_locs('all',sorternames[i],sort_by_gamma=True,gamma=gamma[i])
+    Neurons_list[i].plot_neurons_locs('all',sorternames[i],sort_by_gamma=True,gamma=gamma[i],savefig=True,directory='output_result/'+sorternames[i])
     #以下内容绘制到‘./str(sorternames[i]/wave)’
-    Neurons_list[i].plot_neurons_spikes('gamma',gamma=gamma[i])#每个神经元在每个电极上的波形图（多图）
+    Neurons_list[i].plot_neurons_spikes('gamma',gamma=gamma[i],savefig=True,directory='output_result/'+sorternames[i])#每个神经元在每个电极上的波形图（多图）
 
 #生成下载文件
-import os
-for i in range(3):
-    os.makedirs('output_result/'+sorternames[i],exist_ok=True)
+
     for ne in range(Neurons_list[i].n_neurons):
         addstr = str(Neurons_list[i].neuron_id[ne])
         np.save(os.path.join('output_result/'+sorternames[i],'waveforms_'+addstr+'.npy'),Neurons_list[i].result[ne])
@@ -90,24 +91,3 @@ nx.draw_networkx_labels(G,pos,labels)
 plt.axis('off')
 plt.savefig('output_result/graph.png')
 plt.show()
-#生成压缩文件
-import zipfile 
-import sys 
-
-def writeAllFileToZip(absDir,zipFile):
-    for f in os.listdir(absDir):
-        absFile=os.path.join(absDir,f) 
-        if os.path.isdir(absFile): 
-            relFile=absFile[len(os.getcwd())+1:] 
-            zipFile.write(relFile) 
-            writeAllFileToZip(absFile,zipFile) 
-        else: 
-            relFile=absFile[len(os.getcwd())+1:] 
-            zipFile.write(relFile)
-    return
-
-zipFilePath=os.path.join(sys.path[0],"output_result.zip") 
-zipFile=zipfile.ZipFile(zipFilePath,"w",zipfile.ZIP_DEFLATED) 
-absDir=os.path.join(sys.path[0],"output_result") 
-writeAllFileToZip(absDir,zipFile) 
-print("压缩成功")
