@@ -90,7 +90,7 @@ class Neurons:
                 
     def find_bursts(self,R,thr):
         ntp,nresult = burst_finding.burst_finding(self,R,thr)
-        neo_neurons = Neurons(nresult,ntp,self.neuron_id,self.channel_id,self.Fs,self.time_length,self.channels_names,self.channels_locs)
+        neo_neurons = Neurons(nresult,ntp,self.neuron_id,self.channel_id,self.Fs,self.time_length,self.channels_names,self.channels_locs,self.unit)
         return neo_neurons 
 
     def get_firing_rate(self,timestep):
